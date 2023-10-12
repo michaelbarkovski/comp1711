@@ -6,3 +6,5 @@ how to run your code - gcc filename -o first
 
 printf needs a format specifier to define how to print out 
 REMEMBER THAT A FUNCTION NEEDS A RETURN STATEMENT 
+
+creating an array - int a [10]
