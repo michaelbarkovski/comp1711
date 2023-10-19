@@ -12,3 +12,13 @@ int main() {
     }
     return 0;
 }
+
+
+functions:
+
+int sum (int a, int b)  //int is a retrn type, the function returns a value of this data type (int), int a and b are input parameters
+{
+    int answer;
+    answer = a + b;
+    return answer
+}
