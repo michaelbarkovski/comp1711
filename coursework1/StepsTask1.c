@@ -53,33 +53,35 @@ int main() {
 
     int buffer_size = 100;
     char line_buffer[buffer_size];
-    while (fgets(line_buffer, buffer_size, file) != NULL) {
-        printf("%d\n", atoi(line_buffer));
-    }
 
-   FITNESS_DATA data[10000]; //each line read from file is stored into array data
-   int read = 0; //read stores the number of values that were read in succesfully from each line of the file 
-   int records = 0; //records keeps track of the number of records stored in from the file (second task)
 
-   while(!feof(file)) {
+    int count = 0;
+    char date[11];
+    char time[6];
+    char steps[10];
 
-    read = fscanf(file, "%11 %6 %d\n", data[records].date, data[records].time, &data[records].steps);  //reading each element in the record
-    if (ferror(file)){
-        printf("Error reading file. \n");
-        return 1;
-    }
-   }
+    FITNESS_DATA data[100];
 
-   fclose(file);
+    
+   while(fgets(line_buffer,buffer_size,file)){
+    tokeniseRecord(line_buffer,",",date,time,steps);
 
-   printf("Number of records in file: %d\n", records);
-
-   for (int i = 0; i < records; i++) {
-    printf("%c %c %d\n", data[i].date, data[i].time, data[i].steps);
+    strcpy(data[count].date, date);
+    strcpy(data[count].time, time);
+    data[count].steps = atoi(steps);
+    count++;
 
    }
-   
 
+    fclose(file);
+
+    printf("Number of records in file: %d\n", count);
+
+    for(int x = 0; x<3; x++){
+        printf("%s/",data[x].date);
+        printf("%s/",data[x].time);
+        printf("%d\n",data[x].steps);
+    }
 
     
 
