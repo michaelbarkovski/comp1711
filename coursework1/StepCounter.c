@@ -84,6 +84,18 @@ void optionA(){
 }
 
 void optionB(){
+
+    char filename[100];
+    printf("Input Filename: ");
+    scanf("%99s", filename);
+
+    FILE *file = fopen(filename, "r");
+
+    if (file == NULL){
+        printf("Error: Could not open file\n ");
+        
+    } 
+
     int buffer_size = 100;
     char line_buffer[buffer_size];
 
@@ -110,15 +122,57 @@ void optionB(){
 
     printf("Number of records in file: %d\n", count);
 
-    for(int x = 0; x<3; x++){
-        printf("%s/",data[x].date);
-        printf("%s/",data[x].time);
-        printf("%d\n",data[x].steps);
-    }
+   // for(int x = 0; x<3; x++){
+   //     printf("%s/",data[x].date);
+   //     printf("%s/",data[x].time);
+   //     printf("%d\n",data[x].steps);
+   // }
 }
 
 void optionC(){
-    printf("C");
+    char filename[100];
+    printf("Input Filename: ");
+    scanf("%99s", filename);
+
+    FILE *file = fopen(filename, "r");
+
+    if (file == NULL){
+        printf("Error: Could not open file\n ");
+        
+    } 
+
+    int buffer_size = 100;
+    char line_buffer[buffer_size];
+
+
+    int count = 0;
+    char date[11];
+    char time[6];
+    char steps[10];
+
+    FITNESS_DATA data[100];
+
+    
+   while(fgets(line_buffer,buffer_size,file)){
+    tokeniseRecord(line_buffer,",",date,time,steps);
+
+    
+    data[count].steps = atoi(steps);
+    count++;
+
+   }
+
+    fclose(file);
+
+    for(int i=0; i<count; i++) {
+        int total = 0;
+        total = total + data[i];
+        
+    }
+    int mean = 0;
+    mean = total / count;
+
+    printf("%d", mean);
 }
 
 void optionD(){
@@ -126,7 +180,7 @@ void optionD(){
 }
 
 void optionE(){
-    printf("E");
+    
 }
 
 void optionF(){
