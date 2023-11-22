@@ -65,7 +65,7 @@ void Menu() {
 void optionA(){
     char filename[100];
     printf("Input Filename: ");
-    scanf("%99s", filename);
+    scanf("%s", filename);
 
     FILE *file = fopen(filename, "r");
 
@@ -85,17 +85,7 @@ void optionA(){
 
 void optionB(){
 
-    char filename[100];
-    printf("Input Filename: ");
-    scanf("%99s", filename);
-
-    FILE *file = fopen(filename, "r");
-
-    if (file == NULL){
-        printf("Error: Could not open file\n ");
-        
-    } 
-
+    
     int buffer_size = 100;
     char line_buffer[buffer_size];
 
@@ -159,16 +149,17 @@ void optionC(){
     
     data[count].steps = atoi(steps);
     count++;
-
+    
    }
 
     fclose(file);
-
+    int total = 0;
     for(int i=0; i<count; i++) {
-        int total = 0;
-        total = total + data[i];
+       
+        total = total + data[i].steps;
         
     }
+    
     int mean = 0;
     mean = total / count;
 
@@ -202,7 +193,8 @@ int main() {
     do {
         Menu();
 
-        scanf("%c", &option);
+        //scanf("%c", &option);
+        option = getchar();
 
         switch (option){
             case 'A':
