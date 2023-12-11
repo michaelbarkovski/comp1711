@@ -14,7 +14,7 @@ typedef struct {
 
 // Define any additional variables here
 // Global variables for filename and FITNESS_DATA array
-
+char filename[100];
 
 // This is your helper function. Do not change it in any way.
 // Inputs: character array representing a row; the delimiter character
@@ -125,122 +125,240 @@ void optionB(){
    // }
 }
 
-void optionC(){
+
+void optionC() {
+
     char filename[100];
     printf("Input Filename: ");
     scanf("%99s", filename);
 
     FILE *file = fopen(filename, "r");
 
-    if (file == NULL){
-        printf("Error: Could not open file\n ");
-        
+    if (file == NULL) {
+
+        printf("Error: Could not open file\n");
+
+
     } 
+    else {
+        int buffer_size = 100;
+        char line_buffer[buffer_size];
 
-    int buffer_size = 100;
-    char line_buffer[buffer_size];
+        int count = 0;
+        char date_output[12];
+        char time_output[6];
+        int min_Steps = INT_MAX;
 
+        while (fgets(line_buffer, buffer_size, file)) {
 
-    int count = 0;
-    char date[11];
-    char time[6];
-    char steps[10];
+            char date[11];
+            char time[6];
+            char steps[10];
 
-    FITNESS_DATA data[100];
+            tokeniseRecord(line_buffer, ",", date, time, steps);
 
-    
-   while(fgets(line_buffer,buffer_size,file)){
-    tokeniseRecord(line_buffer,",",date,time,steps);
+            
+            int current_steps = atoi(steps);
 
-    
-    data[count].steps = atoi(steps);
-    count++;
-    
-   }
+            if (current_steps < min_Steps) {
 
-    fclose(file);
+                min_Steps = current_steps;
 
-
-    char date_output[12];
-    char time_output[20];
-    int min_Steps = INT_MAX; //INT_MAX found online, aswell as include <limits.h> 
-
-    for (int i = 0; i<count; i++){
-
-        if(data[i].steps < min_Steps){
-            min_Steps = data[i].steps;
-            strcpy(date_output, data[i].date);
-            strcpy(time_output, data[i].time);
-
+                strncpy(date_output, date, sizeof(date_output) - 1);
+                date_output[sizeof(date_output) - 1] = '\0';  
+                strncpy(time_output, time, sizeof(time_output) - 1);
+                time_output[sizeof(time_output) - 1] = '\0';  
+            }
+            
+            count++;
         }
-    
 
+        fclose(file);
+
+        if (count > 0) {
+            printf("Fewest steps: %s %s\n", date_output, time_output);
+        } 
 
     }
-
-    printf("Fewest steps: %s %s\n ", date_output, time_output);
-    
-
 }
 
-void optionD(){
-        char filename[100];
+
+// void optionC(){
+//     char filename[100];
+//     printf("Input Filename: ");
+//     scanf("%99s", filename);
+
+//     FILE *file = fopen(filename, "r");
+
+//     if (file == NULL){
+//         printf("Error: Could not open file\n ");
+        
+//     } 
+
+//     int buffer_size = 100;
+//     char line_buffer[buffer_size];
+
+
+//     int count = 0;
+//     char date[11];
+//     char time[6];
+//     char steps[10];
+
+//     FITNESS_DATA data[100];
+
+    
+//    while(fgets(line_buffer,buffer_size,file)){
+//     tokeniseRecord(line_buffer,",",date,time,steps);
+
+    
+//     data[count].steps = atoi(steps);
+//     count++;
+    
+//    }
+
+//     fclose(file);
+
+
+//     char date_output[12];
+//     char time_output[6];
+//     int min_Steps = INT_MAX; //INT_MAX found online, aswell as include <limits.h> 
+
+//     for (int i = 0; i<=count; i++){
+
+//         if(data[i].steps < min_Steps){
+//             min_Steps = data[i].steps;
+//             strcpy(date_output, data[i].date);
+//             strcpy(time_output, data[i].time);
+
+//         }
+    
+
+
+//     }
+
+//     printf("Fewest steps: %s %s\n ", date_output, time_output);
+    
+
+// }
+
+void optionD() {
+
+    char filename[100];
     printf("Input Filename: ");
     scanf("%99s", filename);
 
     FILE *file = fopen(filename, "r");
 
-    if (file == NULL){
-        printf("Error: Could not open file\n ");
-        
+    if (file == NULL) {
+
+        printf("Error: Could not open file\n");
+
+
     } 
+    else {
+        int buffer_size = 100;
+        char line_buffer[buffer_size];
 
-    int buffer_size = 100;
-    char line_buffer[buffer_size];
+        int count = 0;
+        char date_output[12];
+        char time_output[6];
+        int max_Steps = INT_MIN; //Found online, aswell as include <limits.h>
 
+        while (fgets(line_buffer, buffer_size, file)) {
 
-    int count = 0;
-    char date[11];
-    char time[6];
-    char steps[10];
+            char date[11];
+            char time[6];
+            char steps[10];
 
-    FITNESS_DATA data[100];
+            tokeniseRecord(line_buffer, ",", date, time, steps);
 
-    
-   while(fgets(line_buffer,buffer_size,file)){
-    tokeniseRecord(line_buffer,",",date,time,steps);
+            
+            int current_steps = atoi(steps);
 
-    
-    data[count].steps = atoi(steps);
-    count++;
-    
-   }
+            if (current_steps > max_Steps) {
 
-    fclose(file);
+                max_Steps = current_steps;
 
-
-    char date_output[12];
-    char time_output[20];
-    int max_Steps = INT_MIN; //INT_MAX found online, aswell as include <limits.h> 
-
-    for (int i = 0; i<count; i++){
-
-        if(data[i].steps > max_Steps){
-            max_Steps = data[i].steps;
-            strcpy(date_output, data[i].date);
-            strcpy(time_output, data[i].time);
-
+                strncpy(date_output, date, sizeof(date_output) - 1);
+                date_output[sizeof(date_output) - 1] = '\0';  
+                strncpy(time_output, time, sizeof(time_output) - 1);
+                time_output[sizeof(time_output) - 1] = '\0';  
+            }
+            
+            count++;
         }
-    
 
+        fclose(file);
+
+        if (count > 0) {
+            printf("Largest steps: %s %s\n", date_output, time_output);
+        } 
 
     }
+}
 
-    printf("Largest steps: %s %s\n ", date_output, time_output);
+
+
+// void optionD(){
+//     char filename[100];
+//     printf("Input Filename: ");
+//     scanf("%s", filename); //99
+
+//     FILE *file = fopen(filename, "r");
+
+//     if (file == NULL){
+//         printf("Error: Could not open file\n ");
+        
+//     } 
+
+//     int buffer_size = 100;
+//     char line_buffer[buffer_size];
+
+
+//     int count = 0;
+//     char date[11];
+//     char time[6];
+//     char steps[10];
+
+//     FITNESS_DATA data[100];
+
+    
+//    while(fgets(line_buffer,buffer_size,file)){
+//     tokeniseRecord(line_buffer,",",date,time,steps);
+
+    
+//     data[count].steps = atoi(steps);
+//     count++;
+    
+//    }
+
+//     fclose(file);
+
+
+//     char date_output[12];
+//     char time_output[6];
+//     int max_Steps = INT_MIN ;  
+
+//     for (int i = 0; i<=count; i++){
+
+//         if(data[i].steps > max_Steps){
+//             max_Steps = data[i].steps;
+//             strcpy(date_output, data[i].date);
+//             date_output[sizeof(date_output)-1] = '\0';
+//             strcpy(time_output, data[i].time);
+//             time_output[sizeof(time_output)-1] = '\0';
+
+//         }
     
 
 
-}
+//     }
+
+//     printf("Largest steps: %s %s\n ", date_output, time_output);
+    
+
+
+// }
 
 void optionE(){
 
@@ -334,18 +452,18 @@ void optionF(){
     int streak; 
 
 
-    for (int i = 0; i<count; i++){
+    // for (int i = 0; i<count; i++){
 
-        if(data[i].steps > 500){
-            max_Steps = data[i].steps;
-            strcpy(, data[i].date);
-            strcpy(time_output, data[i].time);
+    //     if(data[i].steps > 500){
+    //         max_Steps = data[i].steps;
+    //         strcpy(, data[i].date);
+    //         strcpy(time_output, data[i].time);
 
-        }
+    //     }
     
 
 
-    }
+    // }
 
 
 
@@ -369,6 +487,9 @@ int main() {
 
         scanf(" %c", &option);
         //option = getchar();
+        while(getchar()!= '\n');
+        
+        
 
         switch (option){
             case 'A':
