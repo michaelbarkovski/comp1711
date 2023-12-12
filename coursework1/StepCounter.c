@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
-
+#include <math.h>
 //#include "FitnessDataStruct.h"
 
 // Struct moved to header file
@@ -16,7 +16,7 @@ typedef struct {
 // Global variables for filename and FITNESS_DATA array
 char filename[100];
 int count;
-FITNESS_DATA data[100];
+FITNESS_DATA data[10000];
 
 // This is your helper function. Do not change it in any way.
 // Inputs: character array representing a row; the delimiter character
@@ -76,7 +76,7 @@ void load_file(){
     int buffer_size = 100;
     char line_buffer[buffer_size];
 
-    //int count = 0;
+    
 
     //FITNESS_DATA data[100];
 
@@ -297,7 +297,7 @@ void optionC() {
 void optionD(){
     load_file();
     char date_output[12];
-    char time_output[6  ];
+    char time_output[6];
     int max_Steps = INT_MIN;
     for (int i = 0; i<=count; i++){
         if(data[i].steps > max_Steps){
@@ -433,76 +433,21 @@ void optionE(){
     load_file();
     
     int total = 0;
-    for(int i=0; i<count; i++) {
+    for(int i=0; i<count-1; i++) {
        
         total = total + data[i].steps;
         
     }
-    
-    int mean = 0;
-    mean = total / count;
 
-    printf("%d \n ", mean);
+    int mean = (float)total / count;
+    
+
+
+    printf("Mean step count: %d \n ", mean);
     
 }
 
 void optionF(){
-
-    char filename[100];
-    printf("Input Filename: ");
-    scanf("%99s", filename);
-
-    FILE *file = fopen(filename, "r");
-
-    if (file == NULL){
-        printf("Error: Could not open file\n ");
-        
-    } 
-
-    int buffer_size = 100;
-    char line_buffer[buffer_size];
-
-
-    int count = 0;
-    char date[11];
-    char time[6];
-    char steps[10];
-
-    FITNESS_DATA data[100];
-
-    
-   while(fgets(line_buffer,buffer_size,file)){
-    tokeniseRecord(line_buffer,",",date,time,steps);
-
-    
-    data[count].steps = atoi(steps);
-    count++;
-    
-   }
-
-    fclose(file);
-
-    char date_start[12];
-    char time_start[20];
-    char date_finish[12];
-    char time_finish[12];
-    int streak; 
-
-
-    // for (int i = 0; i<count; i++){
-
-    //     if(data[i].steps > 500){
-    //         max_Steps = data[i].steps;
-    //         strcpy(, data[i].date);
-    //         strcpy(time_output, data[i].time);
-
-    //     }
-    
-
-
-    // }
-
-
 
 
 }
