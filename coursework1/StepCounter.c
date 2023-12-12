@@ -65,12 +65,12 @@ void Menu() {
 
 }
 
-void load_file(){
+int load_file(){
     FILE *file = fopen(filename, "r");
 
     if(file == NULL){
-        printf("Error: Could not open file\n ");
-        return;
+        printf("Error: Could not find or open file.\n ");
+        return 1;
     }
 
     int buffer_size = 100;
@@ -98,6 +98,7 @@ void load_file(){
     }
     fclose(file);
 
+    return 0;
     
 }
 
@@ -111,11 +112,13 @@ void optionA(){
     if (file == NULL){
         printf("Error: Could not find or open file.\n ");
         
+        
     } 
 
     else {
         printf("File Succesfully loaded.\n ");
         fclose(file);
+        
     }
 
 
@@ -439,11 +442,13 @@ void optionE(){
         
     }
 
-    int mean = (float)total / count;
+    //int mean = (float)total / count;
+
+    int mean = total / count; 
     
 
 
-    printf("Mean step count: %d \n ", mean);
+    printf("Mean step count: %d \n ", (int)round(mean));
     
 }
 
