@@ -24,12 +24,57 @@ void display_Maze() {
 
 }
 
-void move(){
+void player_Move(){
     // code here should handle the moves of the player
 }
 
 
 
 int main(){
-    
+
+    load_file(filename, &Maze); //calling in the load file function
+
+    int endGame = 0; // when endGame becomes equal to 1, the game ends 
+    char move; // variable that stores the move of the player
+    while (endGame!=0){
+        display_Maze(&Maze);
+        
+        // scans the players move and stores it in the move variable
+        printf("Please enter your move (case insensitive): (W/A/S/D/M): \n");
+        scanf(" %c", &move);
+
+        switch(move) {
+            case 'W': 
+            case 'w':
+            case 'A':
+            case 'a':
+            case 'S':
+            case 's':
+            case 'D':
+            case 'd':
+            // if any of the above options are entered (moves on the board), the player_Move function is called
+                player_Move(move, &Maze); 
+            case 'M':
+            case 'm':
+            // if the above options are entered, the display_Maze function is called
+                display_Maze(&Maze);
+                break;
+            // asking user to enter a correct option if their input does not match the cases
+            default:
+                printf("Please enter a valid move from the options: (W/A/S/D/M): \n");
+                
+        }
+
+        // checking if the user has reached the exit and if the game should end
+
+        if(/* player reaches the 'E' on the maze */){
+            endGame = 1;
+            printf("You have successfully escaped the Maze. Well done! \n");
+        }
+
+        return 0;
+    }
+
+
+
 }
