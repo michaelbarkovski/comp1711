@@ -30,6 +30,8 @@ void player_Move(){
 
 
 
+
+
 int main(){
 
     load_file(filename, &Maze); //calling in the load file function
